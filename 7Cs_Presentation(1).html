@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>7 C's of Expository Writing</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Sans+3:wght@600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --blue: #4a6b5a;
+      --blue-light: #edf4ef;
+      --blue-mid: #739684;
+      --orange: #9c7a4e;
+      --green: #3f6c56;
+      --red: #9a5f5f;
+      --dark: #1f2a24;
+      --mid: #54635a;
+      --light: #f6f8f5;
+      --white: #ffffff;
+      --border: #d9e2da;
+      --ink-soft: #34443b;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Manrope', sans-serif;
+      background: radial-gradient(circle at 14% 14%, #dce9df 0%, #edf3ee 38%, #f4f7f4 100%);
+    }
+
+    /* ── DECK ── */
+    #deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── SLIDES ── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(60px);
+      transition: opacity .5s ease, transform .5s ease;
+      background: linear-gradient(180deg, #ffffff 0%, #f9fcff 100%);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+    }
+
+    .slide.out {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+
+    /* ── PROGRESS ── */
+    #prog {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4a6b5a, #8aa594);
+      z-index: 999;
+      transition: width .4s ease;
+    }
+
+    /* ── SPEAKER CHIP ── */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--blue-light);
+      border: 1.5px solid #bfdbfe;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    .chip .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .25
+      }
+    }
+
+    .slide-num {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      z-index: 10;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, .7);
+    }
+
+    /* ── KEYBOARD HINT ── */
+    #hint {
+      position: fixed;
+      top: 16px;
+      right: 18px;
+      font-size: .65rem;
+      color: #94a3b8;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      opacity: .6;
+    }
+
+    .k {
+      background: rgba(0, 0, 0, .08);
+      border: 1px solid rgba(0, 0, 0, .15);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: monospace;
+      font-size: .7rem;
+    }
+
+    /* ══════════════════════════════════════════
+   SLIDE 1 — TITLE (split: text left, image right)
+══════════════════════════════════════════ */
+    #s1 {
+      align-items: stretch;
+    }
+
+    #s1 .left {
+      width: 52%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 72px 64px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(141, 177, 155, .22), transparent 42%),
+        linear-gradient(145deg, #22352d 0%, #2f4a3f 100%);
+      color: #fff;
+    }
+
+    #s1 .left h1 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -.025em;
+      margin-bottom: 14px;
+      color: #fff;
+    }
+
+    #s1 .left h1 span {
+      color: #c6e4d3;
+    }
+
+    #s1 .left p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: #94a3b8;
+      margin-bottom: 36px;
+    }
+
+    #s1 .left .byline {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    #s1 .left .person {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: rgba(255, 255, 255, .07);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-size: .88rem;
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+
+    #s1 .left .av {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .av1 {
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+    }
+
+    .av2 {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+    }
+
+    .av3 {
+      background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .av4 {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+    }
+
+    .av5 {
+      background: linear-gradient(135deg, #ec4899, #f43f5e);
+    }
+
+    .av6 {
+      background: linear-gradient(135deg, #06b6d4, #0891b2);
+    }
+
+    .av7 {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    #s1 .right {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #2c4238;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #s1 .right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to right, #2a4338 0%, rgba(42, 67, 56, .42) 36%, rgba(42, 67, 56, .15) 62%, rgba(42, 67, 56, .58) 100%);
+    }
+
+    #s1 .right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 76% 20%, rgba(173, 142, 104, .26), transparent 30%),
+        radial-gradient(circle at 70% 68%, rgba(133, 168, 147, .34), transparent 35%),
+        linear-gradient(145deg, #2a4338 0%, #38584a 58%, #4d7160 100%);
+    }
+
+    #s1 .right .caption {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      background: rgba(0, 0, 0, .65);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: .85rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    #s1 .right .big-title {
+      position: relative;
+      z-index: 2;
+      font-size: 5rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, .15);
+      text-align: center;
+      line-height: 1;
+      letter-spacing: -.03em;
+    }
+
+    /* ══════════════════════════════════════════
+   C-IMAGE SLIDES
+══════════════════════════════════════════ */
+    .c-image-slide {
+      align-items: stretch;
+      padding: 0;
+    }
+
+    .c-image-slide .image-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .c-image-slide h2 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: clamp(1.2rem, 2.1vw, 1.7rem);
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.12;
+    }
+
+    .c-image-slide h2 .c-label {
+      color: var(--blue);
+    }
+
+    .c-image-slide .image-caption {
+      color: var(--mid);
+      font-size: .82rem;
+      line-height: 1.35;
+    }
+
+    .c-image-frame {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .c-image-frame img {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: contain;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    /* ══════════════════════════════════════════
+   C-CONTENT SLIDES
+══════════════════════════════════════════ */
+    .c-slide {
+      align-items: stretch;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .c-slide .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 34px 34px 28px;
+      border-radius: 22px;
+      border: 1.5px solid #d9e5ef;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .08);
+    }
+
+    .c-slide .right {
+      width: 34%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      border-radius: 22px;
+      border: 1.5px solid #567663;
+      background: linear-gradient(160deg, #355446 0%, #466956 58%, #587a66 100%);
+      box-shadow: 0 12px 28px rgba(43, 65, 54, .28);
+    }
+
+    .side-note {
+      width: min(100%, 320px);
+      min-height: 300px;
+      border-radius: 16px;
+      border: 1.5px solid rgba(255, 255, 255, .22);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .06));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .side-note-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #eef7f1;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    .side-note-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(232, 245, 236, .7);
+      background: rgba(221, 236, 226, .2);
+      font-size: 1.05rem;
+    }
+
+    .side-note p {
+      color: #f1faf3;
+      font-size: .88rem;
+      line-height: 1.5;
+      opacity: .95;
+    }
+
+    .side-note ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .side-note li {
+      border-radius: 10px;
+      border: 1px solid rgba(225, 240, 232, .5);
+      background: rgba(34, 56, 44, .34);
+      color: #ecf8ef;
+      font-size: .82rem;
+      line-height: 1.35;
+      padding: 8px 10px;
+    }
+
+    .c-slide h2 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: clamp(1.65rem, 2.9vw, 2.35rem);
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .c-slide h2 .c-label {
+      color: var(--blue);
+    }
+
+    .c-content-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .c-content-cards .c-card:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .c-card {
+      background: var(--white);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      border: 1.5px solid #d7e3db;
+      border-radius: 14px;
+      padding: 12px 14px;
+      animation: slideIn .5s ease both;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .c-card:hover {
+      transform: translateX(8px);
+      border-color: var(--blue);
+      box-shadow: 0 4px 12px rgba(74, 107, 90, .16);
+    }
+
+    .c-card:nth-child(1) {
+      animation-delay: .1s
+    }
+
+    .c-card:nth-child(2) {
+      animation-delay: .25s
+    }
+
+    .c-card:nth-child(3) {
+      animation-delay: .4s
+    }
+
+    .c-card:nth-child(4) {
+      animation-delay: .5s
+    }
+
+    .c-card:nth-child(5) {
+      animation-delay: .6s
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .c-card .check {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      color: var(--green);
+    }
+
+    .c-card .ctxt {
+      font-size: .87rem;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+
+    .c-card .ctxt strong {
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    .example-pair {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .example-card {
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid;
+      background: #fff;
+    }
+
+    .example-tag {
+      display: inline-block;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 3px 8px;
+      margin-bottom: 8px;
+    }
+
+    .example-card.bad {
+      border-color: #dfd4c8;
+      background: #f8f4ef;
+    }
+
+    .example-card.bad .example-tag {
+      background: #ebe2d6;
+      color: #6f5a40;
+    }
+
+    .example-card.good {
+      border-color: #c6dfce;
+      background: #eef7f0;
+    }
+
+    .example-card.good .example-tag {
+      background: #dceee0;
+      color: #2f5b44;
+    }
+
+    .example-text {
+      font-size: .82rem;
+      line-height: 1.5;
+      color: #1f2937;
+    }
+
+    /* ══════════════════════════════════════════
+   SLIDE ACTIVITY / CONCLUSION
+══════════════════════════════════════════ */
+    #activity {
+      align-items: stretch;
+      background: linear-gradient(145deg, #283c32, #355244);
+    }
+
+    #activity .inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 72px 64px;
+      width: 100%;
+      text-align: center;
+    }
+
+    #activity h1 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.08;
+      margin-bottom: 24px;
+    }
+
+    #activity h1 span {
+      color: #d4e8db;
+    }
+
+    #activity .activity-desc {
+      font-size: 1.2rem;
+      color: #94a3b8;
+      max-width: 700px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .circle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .cnode {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ccirc {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      border: 2.5px solid;
+      animation: glow 2.8s ease-in-out infinite;
+    }
+
+    .cn-blue {
+      background: #e8f1eb;
+      border-color: #b6ccbe;
+      color: #3f6c56;
+    }
+
+    .cn-red {
+      background: #f2f0ea;
+      border-color: #cfc8bc;
+      color: #6b5d47;
+    }
+
+    .cn-gold {
+      background: #edf4ef;
+      border-color: #bfd2c6;
+      color: #507562;
+    }
+
+    .cn-green {
+      background: #e7f0ea;
+      border-color: #b7ccb9;
+      color: #426e58;
+    }
+
+    .cn-purple {
+      background: #edf2ed;
+      border-color: #c4d1c5;
+      color: #4e685a;
+    }
+
+    .cn-orange {
+      background: #f3f1e9;
+      border-color: #d7cfbf;
+      color: #6e624c;
+    }
+
+    .cn-cyan {
+      background: #eaf3ed;
+      border-color: #bfd3c7;
+      color: #4f7462;
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 transparent
+      }
+
+      50% {
+        box-shadow: 0 0 14px 3px currentColor
+      }
+    }
+
+    .clabel {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #94a3b8;
+      text-align: center;
+      max-width: 80px;
+    }
+
+    .carrow {
+      font-size: 1.4rem;
+      color: var(--blue);
+      opacity: .6;
+      align-self: center;
+      padding-bottom: 18px;
+    }
+
+    .activity-cta {
+      background: rgba(255, 255, 255, .07);
+      border: 1.5px solid rgba(255, 255, 255, .12);
+      border-radius: 14px;
+      padding: 24px 32px;
+      color: #e2e8f0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      max-width: 600px;
+    }
+
+    /* TEAMS */
+    #teams .inner {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 72px;
+    }
+
+    #teams h2 {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.12;
+      margin-bottom: 40px;
+    }
+
+    #teams h2 span {
+      color: var(--blue);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 700px;
+    }
+
+    .team-card {
+      background: var(--white);
+      border: 1.5px solid #dbeafe;
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: slideIn .5s ease both;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue);
+      box-shadow: 0 8px 20px rgba(26, 108, 245, .1);
+    }
+
+    .team-card:nth-child(1) {
+      animation-delay: .1s
+    }
+
+    .team-card:nth-child(2) {
+      animation-delay: .2s
+    }
+
+    .team-card:nth-child(3) {
+      animation-delay: .3s
+    }
+
+    .team-card:nth-child(4) {
+      animation-delay: .4s
+    }
+
+    .team-card:nth-child(5) {
+      animation-delay: .5s
+    }
+
+    .team-card:nth-child(6) {
+      animation-delay: .6s
+    }
+
+    .team-card:nth-child(7) {
+      animation-delay: .7s
+    }
+
+    .team-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .85rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .team-name {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    /* Responsive */
+    @media(max-width:768px) {
+
+      #s1 .left,
+      #s1 .right {
+        width: 100%;
+      }
+
+      #s1 {
+        flex-direction: column;
+      }
+
+      #s1 .left {
+        padding: 44px 24px;
+      }
+
+      #s1 .right {
+        min-height: 220px;
+      }
+
+      .c-image-slide {
+        padding: 0;
+      }
+
+      .c-image-slide .image-panel {
+        padding: 0;
+      }
+
+      .c-image-frame img {
+        max-height: none;
+      }
+
+      .c-slide .left,
+      .c-slide .right {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .c-slide {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      .side-note {
+        min-height: 220px;
+        max-width: 100%;
+      }
+
+      .c-content-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .c-content-cards .c-card:last-child {
+        grid-column: auto;
+      }
+
+      .example-pair {
+        grid-template-columns: 1fr;
+      }
+
+      #activity .inner {
+        padding: 40px 24px;
+      }
+
+      #teams .inner {
+        padding: 40px 24px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="prog"></div>
+  <div id="hint">
+    <span class="k">←</span><span class="k">→</span> navigate
+  </div>
+  <div id="deck">
+
+    <!-- ════════════════════════════════
+     SLIDE 1 — TITLE & TEAM
+════════════════════════════════ -->
+    <div class="slide active" id="s1">
+      <div class="left">
+        <h1>7 C's of <span>Effective Communication</span></h1>
+        <p>Solid rules for clear and professional writing</p>
+        <div class="byline">
+          <div class="person">
+            <div class="av av1">AA</div>Abbas Ali
+          </div>
+          <div class="person">
+            <div class="av av2">SR</div>Sarim Raza
+          </div>
+          <div class="person">
+            <div class="av av3">TM</div>Taher Mustansir
+          </div>
+          <div class="person">
+            <div class="av av4">AE</div>Abdullah Ahmed
+          </div>
+          <div class="person">
+            <div class="av av5">NK</div>Noman Kamran
+          </div>
+          <div class="person">
+            <div class="av av6">YS</div>Yahya Sohail
+          </div>
+          <div class="person">
+            <div class="av av7">KK</div>Kashif Khan
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="big-title">7C's</div>
+        <div class="caption">✨ Write messages that are clear, precise, and persuasive</div>
+      </div>
+      <div class="slide-num">01 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #1 — COURTESY (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — COURTESY -->
+    <div class="slide c-image-slide" id="s2-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/courtesy.jpg" alt="Courtesy image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — COURTESY -->
+    <div class="slide c-slide" id="s2">
+      <div class="left">
+        <h2><span class="c-label">C #1</span> COURTESY</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Be respectful, tactful, and professional.</p>
+        <div class="c-content-cards">
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use <strong>sincere and thoughtful language</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Choose expressions that <strong>show respect</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Avoid <strong>harsh or biased wording</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Critique ideas, <strong>not people</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Close with a <strong>constructive tone</strong>.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"You did this wrong. Fix it now."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"There is an issue in this section. Could you please revise it today?"</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">🤝</span> Quick Focus</div>
+          <p>Use calm and respectful language even when the message is corrective.</p>
+          <ul>
+            <li>Start polite, stay clear.</li>
+            <li>Request changes, do not attack people.</li>
+            <li>End with thanks or support.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">02 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #2 — CONSIDERATION (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — CONSIDERATION -->
+    <div class="slide c-image-slide" id="s3-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/consideration.jpg" alt="Consideration image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — CONSIDERATION -->
+    <div class="slide c-slide" id="s3">
+      <div class="left">
+        <h2><span class="c-label">C #2</span> CONSIDERATION</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Focus on the receiver, not just the sender.</p>
+        <div class="c-content-cards">
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use a <strong>"you" orientation</strong> where suitable.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Highlight <strong>audience benefit</strong> early.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Show <strong>empathy</strong> for reader constraints.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Adjust <strong>tone and detail</strong> to the audience.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Present information in an <strong>easy-to-use format</strong>.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"I need this because my department requires it."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"If you send this today, your request will be approved before weekend closure."
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">👥</span> Quick Focus</div>
+          <p>Frame the message around what the receiver needs to know and do next.</p>
+          <ul>
+            <li>Lead with audience benefit.</li>
+            <li>Match tone to context.</li>
+            <li>Keep instructions easy to follow.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">03 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #3 — CONCISENESS (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — CONCISENESS -->
+    <div class="slide c-image-slide" id="s4-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/conciseness.jpg" alt="Conciseness image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — CONCISENESS -->
+    <div class="slide c-slide" id="s4">
+      <div class="left">
+        <h2><span class="c-label">C #3</span> CONCISENESS</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Say more with fewer, stronger words.</p>
+        <div class="c-content-cards">
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt"><strong>Eliminate wordy expressions</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Include <strong>only relevant material</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Avoid <strong>unnecessary repetition</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use <strong>short direct sentences</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Cut words that <strong>add no meaning</strong>.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"At this point in time, we are in a position to begin."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"We can begin now."</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">✂️</span> Quick Focus</div>
+          <p>Trim every line until only the useful message remains.</p>
+          <ul>
+            <li>Delete repeated words.</li>
+            <li>Prefer short verbs.</li>
+            <li>Keep one point per sentence.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">04 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #4 — CLARITY (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — CLARITY -->
+    <div class="slide c-image-slide" id="s5-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/clarity.jpg" alt="Clarity image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — CLARITY -->
+    <div class="slide c-slide" id="s5">
+      <div class="left">
+        <h2><span class="c-label">C #4</span> CLARITY</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Make meaning obvious on first read.</p>
+        <div class="c-content-cards">
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Choose <strong>precise, familiar words</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Arrange points in a <strong>logical order</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use <strong>one main idea per sentence</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use transitions to <strong>connect ideas</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Remove words that create <strong>ambiguity</strong>.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"They should review it before submission."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"Team leads should review the report before Friday submission."</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">🧭</span> Quick Focus</div>
+          <p>If a sentence can be read two ways, rewrite it.</p>
+          <ul>
+            <li>Name roles clearly.</li>
+            <li>Use specific deadlines.</li>
+            <li>Avoid vague pronouns.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">05 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #5 — COMPLETENESS (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — COMPLETENESS -->
+    <div class="slide c-image-slide" id="s6-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/completeness.jpg" alt="Completeness image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — COMPLETENESS -->
+    <div class="slide c-slide" id="s6">
+      <div class="left">
+        <h2><span class="c-label">C #5</span> COMPLETENESS</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Give the reader everything needed to act.</p>
+        <div class="c-content-cards">
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt"><strong>Provide all necessary information</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Answer <strong>who, what, when, where, why, how</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Add detail where it <strong>prevents confusion</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">State <strong>action and deadline</strong> clearly.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Include <strong>context or evidence</strong> for claims.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"Please send the report soon."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"Please send the Q1 sales report by 3:00 PM Friday to finance@company.com."</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">📋</span> Quick Focus</div>
+          <p>Before sending, check whether the reader has enough detail to act once.</p>
+          <ul>
+            <li>What is needed?</li>
+            <li>Who does it and by when?</li>
+            <li>Where to send/submit?</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">06 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #6 — CONCRETENESS (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — CONCRETENESS -->
+    <div class="slide c-image-slide" id="s7-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/concreteness.jpg" alt="Concreteness image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — CONCRETENESS -->
+    <div class="slide c-slide" id="s7">
+      <div class="left">
+        <h2><span class="c-label">C #6</span> CONCRETENESS</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Replace vague language with specific proof.</p>
+        <div class="c-content-cards">
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use <strong>specific facts and figures</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use <strong>active, precise verbs</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Choose <strong>vivid words</strong> that create meaning.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Replace broad claims with <strong>measurable outcomes</strong>.</div>
+          </div>
+          <div class="c-card"><span class="check">✓</span>
+            <div class="ctxt">Use <strong>real examples</strong>, not abstract claims.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"Sales improved a lot this month."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"Sales increased 18% in March after the referral campaign."</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">📈</span> Quick Focus</div>
+          <p>Replace broad claims with numbers, names, and concrete results.</p>
+          <ul>
+            <li>Use percentages or counts.</li>
+            <li>Mention specific actions.</li>
+            <li>Include one real example.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">07 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     C #7 — CORRECTNESS (IMAGE + CONTENT)
+════════════════════════════════ -->
+    <!-- IMAGE SLIDE — CORRECTNESS -->
+    <div class="slide c-image-slide" id="s8-image">
+      <div class="image-panel">
+        <div class="c-image-frame">
+          <img src="images/correctness.jpg" alt="Correctness image for communication" />
+        </div>
+      </div>
+      <div class="slide-num">00 / 00</div>
+    </div>
+
+    <!-- CONTENT SLIDE — CORRECTNESS -->
+    <div class="slide c-slide" id="s8">
+      <div class="left">
+        <h2><span class="c-label">C #7</span> CORRECTNESS</h2>
+        <p style="color:var(--mid);margin-bottom:20px;font-size:1rem;">Be accurate in language, facts, and format.</p>
+        <div class="c-content-cards">
+          <div class="c-card">
+            <span class="check">✓</span>
+            <div class="ctxt">Use the <strong>right level of language</strong> for your audience.</div>
+          </div>
+          <div class="c-card">
+            <span class="check">✓</span>
+            <div class="ctxt">Check <strong>grammar, spelling, and punctuation</strong>.</div>
+          </div>
+          <div class="c-card">
+            <span class="check">✓</span>
+            <div class="ctxt">Verify <strong>figures, facts, names, and dates</strong>.</div>
+          </div>
+          <div class="c-card">
+            <span class="check">✓</span>
+            <div class="ctxt">Maintain <strong>consistent formatting and mechanics</strong>.</div>
+          </div>
+          <div class="c-card">
+            <span class="check">✓</span>
+            <div class="ctxt">Review once more before sending or publishing.</div>
+          </div>
+        </div>
+        <div class="example-pair">
+          <div class="example-card bad">
+            <div class="example-tag">Wrong</div>
+            <div class="example-text">"Their are 35 employes in the branch, data was checked yesterday."</div>
+          </div>
+          <div class="example-card good">
+            <div class="example-tag">Correct</div>
+            <div class="example-text">"There are 35 employees in the branch, and the data was checked yesterday."</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <aside class="side-note">
+          <div class="side-note-head"><span class="side-note-icon">✅</span> Quick Focus</div>
+          <p>Accuracy is the final quality filter before delivery.</p>
+          <ul>
+            <li>Proofread grammar and spelling.</li>
+            <li>Verify all facts and names.</li>
+            <li>Keep formatting consistent.</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="slide-num">08 / 09</div>
+    </div>
+
+    <!-- ════════════════════════════════
+     SLIDE 9 — ACTIVITY
+════════════════════════════════ -->
+    <div class="slide" id="activity">
+      <div class="inner">
+        <h1>Let's Practice <span>Together! 🎯</span></h1>
+        <p class="activity-desc">You now have the 7 C's of Effective Communication. Apply them to email, reports, and
+          presentations for stronger results.</p>
+
+        <div class="circle-row">
+          <div class="cnode">
+            <div class="ccirc cn-blue">🤝</div>
+            <div class="clabel">Courtesy</div>
+          </div>
+          <div class="carrow">→</div>
+          <div class="cnode">
+            <div class="ccirc cn-gold">👥</div>
+            <div class="clabel">Consideration</div>
+          </div>
+          <div class="carrow">→</div>
+          <div class="cnode">
+            <div class="ccirc cn-green">✂️</div>
+            <div class="clabel">Conciseness</div>
+          </div>
+          <div class="carrow">→</div>
+          <div class="cnode">
+            <div class="ccirc cn-purple">🧭</div>
+            <div class="clabel">Clarity</div>
+          </div>
+        </div>
+
+        <div class="circle-row">
+          <div class="cnode">
+            <div class="ccirc cn-red">📋</div>
+            <div class="clabel">Completeness</div>
+          </div>
+          <div class="carrow">→</div>
+          <div class="cnode">
+            <div class="ccirc cn-cyan">📈</div>
+            <div class="clabel">Concreteness</div>
+          </div>
+          <div class="carrow">→</div>
+          <div class="cnode">
+            <div class="ccirc cn-orange">✅</div>
+            <div class="clabel">Correctness</div>
+          </div>
+        </div>
+
+        <div class="activity-cta">
+          📝 Next: Convert weak messages into complete, concise, courteous, and correct versions.
+        </div>
+      </div>
+      <div class="slide-num">09 / 09</div>
+    </div>
+
+  </div><!-- #deck -->
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const prog = document.getElementById('prog');
+    const N = slides.length;
+    const formatNum = value => String(value).padStart(2, '0');
+
+    slides.forEach((slide, idx) => {
+      const num = slide.querySelector('.slide-num');
+      if (num) {
+        num.textContent = `${formatNum(idx + 1)} / ${formatNum(N)}`;
+      }
+    });
+
+    let cur = 0;
+
+    function forward() {
+      jump(cur + 1);
+    }
+
+    function backward() {
+      jump(cur - 1);
+    }
+
+    function jump(idx) {
+      if (idx < 0 || idx >= N || idx === cur) return;
+      slides[cur].classList.remove('active');
+      slides[cur].classList.add('out');
+      const prev = cur; cur = idx;
+      setTimeout(() => slides[prev].classList.remove('out'), 600);
+      slides[cur].classList.add('active');
+      sync();
+    }
+
+    function sync() {
+      prog.style.width = `${((cur + 1) / N) * 100}%`;
+    }
+
+    document.addEventListener('keydown', e => {
+      if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); forward(); }
+      if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); backward(); }
+    });
+
+    sync();
+    prog.style.width = `${(1 / N) * 100}%`;
+  </script>
+</body>
+
+</html>
