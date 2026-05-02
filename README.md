@@ -1,6 +1,6 @@
 # EW Lab Final Project - 7 Cs of Communication
 
-Youtube Video Link: [click here](https://ew-lab-final-project.netlify.app/)
+Youtube Video Link: [click here](https://youtu.be/AaEk8wRTv-g)
 
 Presentation (PPT) link: [click here](https://ew-lab-final-project.netlify.app/)
 
